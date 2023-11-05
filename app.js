@@ -5,6 +5,7 @@ const connect = require('./schemas');
 const Product = require('./schemas/products.schema');
 const path = require('path');
 const productRouter = require('./routes/products.router');
+const cors = require("cors");
 
 //익스프레스 객체 할당
 const app = express();
@@ -31,23 +32,14 @@ app.use((err, req, res, next) => {
   }
 });
 
+//모든 도메인에서 API사용 허용
+app.use(cors());
+
+//상품관련 라우터
 app.use('/product', productRouter);
-
-
 
 //DB연결
 connect();
-
-//TODO 지우기
-//데이터 생성 되는지 확인
-//  const newProduct = new Product({
-//    title: "ijh",
-//    author: 'ijh',
-//    comment: 'ijh',
-//    isSoldOut: true,
-//  });
-
-//  newProduct.save();
 
 app.listen(8000, () => {
   console.log('서버연결 됨.');
